@@ -1,0 +1,30 @@
+{
+  "name": "mongoose-power-populate",
+  "version": "1.0.0",
+  "description": "Recursively populate mongoose document references in either direction.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/alexmingoia/mongoose-power-populate.git"
+  },
+  "keywords": [
+    "mongoose",
+    "populate",
+    "join",
+    "mongoose-deep-populate",
+    "mongoose-reverse-populate"
+  ],
+  "author": "Alex Mingoia",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/alexmingoia/mongoose-power-populate/issues"
+  },
+  "homepage": "https://github.com/alexmingoia/mongoose-power-populate",
+  "dependencies": {
+    "get-object-path": "0.0.2",
+    "object-path-set": "0.0.1"
+  }
+}
