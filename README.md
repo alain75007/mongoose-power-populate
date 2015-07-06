@@ -109,3 +109,9 @@ Post
   })
   .exec(...);
 ```
+
+Populate existing documents:
+
+```javascript
+Post.populate(docs, 'comments', callback);
+```
