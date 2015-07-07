@@ -1,9 +1,9 @@
 var get = require('get-object-path');
 var set = require('object-path-set');
 
-module.exports = MongoosePlugin;
+module.exports = MongoosePopulatePlugin;
 
-function MongoosePlugin(mongoose) {
+function MongoosePopulatePlugin(mongoose) {
   var Query = mongoose.Query;
   var _exec = Query.prototype.exec;
   var MongoosePromise = mongoose.Promise;
@@ -11,11 +11,40 @@ function MongoosePlugin(mongoose) {
   if (!mongoose._patchedByMongoosePopulate) {
     mongoose._patchedByMongoosePopulate = true;
 
-    Query.prototype.populate = function (paths, opts) {
+    Query.prototype.populate = function (paths) {
+      var opts = {};
+
+      if (typeof paths === 'object') {
+        opts = paths;
+        paths = Object.keys(opts);
+
+        paths.forEach(function (path) {
+          var currentPath;
+
+          path.split('.').forEach(function (p) {
+            currentPath = (currentPath ? (currentPath + '.') : '') + p;
+
+            paths.forEach(function (p, i) {
+              if (currentPath === p && currentPath !== path) {
+                paths.splice(i, 1);
+              }
+            });
+          });
+        });
+
+        paths = paths.join(' ');
+      }
+
+      Object.keys(opts).forEach(function (key) {
+        if (opts[key] === true) {
+          opts[key] = {};
+        }
+      });
+
       this._populate = {
         model: this.model,
         paths: paths,
-        opts: opts || {}
+        opts: opts
       };
       return this;
     };
